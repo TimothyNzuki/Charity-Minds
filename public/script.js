@@ -1,4 +1,4 @@
-let users = [
+let users = JSON.parse(localStorage.getItem("users")) || [
     {
     firstname: "Mary",
     lastname: "Watson",
@@ -68,8 +68,8 @@ function renderUsers (filterMonth = null) {
     filteredUsers.forEach(user => {
         const row = document.createElement("tr");
         row.innerHTML = `
-            <td class="py-3 px-4">${user.firstname}</td>
-            <td class="py-3 px-4">${user.lastname}</td>
+            <td class="py-3 px-4">${user.firstName}</td>
+            <td class="py-3 px-4">${user.lastName}</td>
             <td class="py-3 px-4">${user.username}</td>
             <td class="py-3 px-4">${user.email}</td>
             <td class="py-3 px-4">${user.phone}</td>
@@ -116,13 +116,19 @@ document.getElementById("monthSelect").addEventListener("change", (event) => {
     renderUsers(selectedMonth);
 });
 
+// Event Listener for reset button
+document.getElementById("resetFilterButton").addEventListener("click", () => {
+    document.getElementById("monthSelect").value = "";
+    renderUsers();
+});
+
 // Add new user
 
 document.getElementById("addUserBtn").addEventListener("click", () => {
     const newUser =[ {
           firstname: "Grace",
           lastname: "Kamau",
-          username: "gracek",
+          username : "gracek",
           email: "grace.kamau@yahoo.com",
           phone: "0723456789",
           dob: "1998-05-21",
