@@ -6,10 +6,98 @@
     <title>Charity Minds</title>
     <link rel="stylesheet" href="./css/style.css">
 </head>
-<body class="bg-black">
-    <h1 class="text-3xl font-bold underline text-center text-blue-500">
-        Hello world!
-    </h1>
+<body class="bg-gray-100 min-h-screen">
+    <!-- Header -->
+    <header class="bg-blue-500 shadow-md p-6 text-white">
+        <h1 class="text-3xl font-bold">Charity Minds - User Dashboard</h1>
+
+    </header>
+
+    <!--Sections-->
+    <main class="container mx-auto p-6">
+        <section class="mb-8 text-center">
+            <h2 class="text-2xl font-bold mb-4">Welcome to Your Dashboard</h2>
+            <p class="text-gray-700">Here you can manage your charity activities and track your impact.</p>
+        </section>
+    </main>
+
+    <section class="grid p-6 grid-cols-1 md:grid-cols-3 gap-6 ">
+
+        <!--Total User Card-->
+        <div class="bg-white text-center rounded-lg shadow p-6">
+
+            <h2 class="text-lg font-semibold text-gray-700">Total Users</h2>
+            <p class="text-3xl font-bold text-blue-500" id="totalUsers">0</p>
+        </div>
+
+        <!--New this month Card-->
+        <div class="bg-white text-center rounded-lg shadow p-6">
+            <h2 class="text-lg font-semibold text-gray-700">New This Month</h2>
+            <p class="text-3xl font-bold text-green-500" id="newThisMonth">0</p>
+        </div>
+
+        <!--Add Button Card-->
+        <div class="flex items-center justify-center">
+            <button class="bg-blue-600 hover:bg-blue-700 rounded-lg py-3 px-6 text-white font-semibold shadow " id="addUserBtn">+ Add New User</button>
+        </div>
+    </section>
+
     
+
+    <!--User Table-->
+    <section class="p-6 ">
+        <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-semibold text-gray-700 mb-4">Active Accounts</h2>
+
+        <!--Filter By Month-->
+    <div class="p-6">
+        <label for="monthSelect" class="block text-gray-700 font-semibold mb-2">Filter by Month:</label>
+        <select id="monthSelect" class="border rounded-lg p-2">
+            <option value="">-- Select Month --</option>
+            <option value="0">January</option>
+            <option value="1">February</option>
+            <option value="2">March</option>
+            <option value="3">April</option>
+            <option value="4">May</option>
+            <option value="5">June</option>
+            <option value="6">July</option>
+            <option value="7">August</option>
+            <option value="8">September</option>
+            <option value="9">October</option>
+            <option value="10">November</option>
+            <option value="11">December</option>
+        </select>
+    </div>
+    </div>
+
+    <!--User Table-->
+        <div class="overflow-x-auto bg-white shadow rounded-lg">
+            <table id="userTable" class="min-w-full border-black border-2">
+                <thead class="bg-gray-200 text-gray-800">
+                    <tr>
+                        <th class="py-3 px-4 text-left">First Name</th>
+                        <th class="py-3 px-4 text-left">Last Name</th>
+                        <th class="py-3 px-4 text-left">Username</th>
+                        <th class="py-3 px-4 text-left">Email</th>
+                        <th class="py-3 px-4 text-left">Phone Number</th>
+                        <th class="py-3 px-4 text-left">DOB</th>
+                        <th class="py-3 px-4 text-left">Gender</th>
+                        <th class="py-3 px-4 text-left">Created At</th>
+                    </tr>
+                </thead>
+                <tbody>
+ 
+
+
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <footer class="bg-gray-900 text-2xl text-white p-6 text-center">
+        <p>&copy; 2026 Charity Minds. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
