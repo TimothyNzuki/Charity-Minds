@@ -1,4 +1,5 @@
-let users = JSON.parse(localStorage.getItem("users")) || [
+/*let users = 
+JSON.parse(localStorage.getItem("users")) || [
   {
     firstname: "Mary",
     lastname: "Watson",
@@ -49,11 +50,38 @@ let users = JSON.parse(localStorage.getItem("users")) || [
     gender: "Female",
     createdAt: "2026-07-25T18:10:34",
   },
-];
+];*/
+
+let users = [];
+
+async function loadUsers() {
+  try {
+    const feedback = await fetch(
+      "https://charity-minds-backend.onrender.com/api/v1/users",
+    );
+    const data = await feedback.json();
+    console.log("Fetched users:", data);
+    console.log("Users array:", data.users);
+
+    users = Array.isArray(data.data) ? data.data : [];
+    renderUsers();
+  } catch (error) {
+    console.log("Error fetching users:", error);
+  }
+}
 
 // Render users in the table
 function renderUsers(filterMonth = null) {
+  if (!Array.isArray(users)) {
+    console.error("Users is not an array:", users);
+    return;
+  }
+
   const tbody = document.querySelector("#userTable tbody");
+  if (!tbody) {
+    console.error("Table body not found. Check your HTML");
+    return;
+  }
   tbody.innerHTML = ""; // Clear existing rows
 
   // Filter users by month if filterMonth is provided
@@ -68,8 +96,8 @@ function renderUsers(filterMonth = null) {
   filteredUsers.forEach((user) => {
     const row = document.createElement("tr");
     row.innerHTML = `
-            <td class="py-3 px-4">${user.firstname}</td>
-            <td class="py-3 px-4">${user.lastname}</td>
+            <td class="py-3 px-4">${user.firstName}</td>
+            <td class="py-3 px-4">${user.lastName}</td>
             <td class="py-3 px-4">${user.username}</td>
             <td class="py-3 px-4">${user.email}</td>
             <td class="py-3 px-4">${user.phone}</td>
@@ -124,8 +152,8 @@ document.getElementById("resetFilterButton").addEventListener("click", () => {
 document.getElementById("addUserBtn").addEventListener("click", () => {
   const newUser = [
     {
-      firstname: "Grace",
-      lastname: "Kamau",
+      firstName: "Grace",
+      lastName: "Kamau",
       username: "gracek",
       email: "grace.kamau@yahoo.com",
       phone: "0723456789",
@@ -134,8 +162,8 @@ document.getElementById("addUserBtn").addEventListener("click", () => {
       createdAt: new Date().toISOString(),
     },
     {
-      firstname: "David",
-      lastname: "Muriuki",
+      firstName: "David",
+      lastName: "Muriuki",
       username: "davidm",
       email: "david.muriuki@yahoo.com",
       phone: "0723456789",
@@ -144,8 +172,8 @@ document.getElementById("addUserBtn").addEventListener("click", () => {
       createdAt: new Date().toISOString(),
     },
     {
-      firstname: "Alice",
-      lastname: "Wanjiku",
+      firstName: "Alice",
+      lastName: "Wanjiku",
       username: "alicew",
       email: "alice.wanjiku@yahoo.com",
       phone: "0723456789",
@@ -160,4 +188,4 @@ document.getElementById("addUserBtn").addEventListener("click", () => {
 });
 
 // Initial render
-renderUsers();
+loadUsers();
