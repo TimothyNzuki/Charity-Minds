@@ -107,8 +107,8 @@ document
       );
 
       if (feedback.ok) {
-        alert("Registration successful!");
-        window.location.href = "index.html";
+        alert("Registration successful! Please login to continue");
+        window.location.href = "login.html";
       } else {
         const errorData = await feedback.json();
         alert("Error: " + errorData.message);
