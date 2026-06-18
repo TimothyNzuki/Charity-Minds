@@ -71,7 +71,7 @@ async function loadUsers() {
 }
 
 // Render users in the table
-function renderUsers(filterMonth = null) {
+function renderUsers(filterMonth = null, searchQuery = "") {
   if (!Array.isArray(users)) {
     console.error("Users is not an array:", users);
     return;
@@ -91,6 +91,23 @@ function renderUsers(filterMonth = null) {
       const createdDate = new Date(u.createdAt);
       return createdDate.getMonth() === parseInt(filterMonth);
     });
+  }
+
+  // Apply search filter
+
+  if (searchQuery && searchQuery.trim() !== "") {
+    const query = searchQuery.toLowerCase();
+    filteredUsers = filteredUsers.filter(
+      (u) =>
+        (u.firstName && u.firstName.toLowerCase().includes(query)) ||
+        (u.lastName && u.lastName.toLowerCase().includes(query)) ||
+        (u.username && u.username.toLowerCase().includes(query)) ||
+        (u.email && u.email.toLowerCase().includes(query)) ||
+        (u.phone && u.phone.toLowerCase().includes(query)) ||
+        (u.dob && u.dob.toLowerCase().includes(query)) ||
+        (u.gender && u.gender.toLowerCase().includes(query)) ||
+        (u.createdAt && u.createdAt.toLowerCase().includes(query)),
+    );
   }
 
   filteredUsers.forEach((user) => {
@@ -145,6 +162,22 @@ document.getElementById("monthSelect").addEventListener("change", (event) => {
 document.getElementById("resetFilterButton").addEventListener("click", () => {
   document.getElementById("monthSelect").value = "";
   renderUsers();
+});
+
+// Event listener for the search bar
+document.getElementById("searchInput").addEventListener("input", (event) => {
+  const searchQuery = event.target.value;
+  const selectedMonth = document.getElementById("monthSelect").value;
+  renderUsers(selectedMonth, searchQuery);
+});
+
+// Event listener for menuToggle
+
+const menuToggle = document.getElementById("menuToggle");
+const navLink = document.getElementById("navLink");
+
+menuToggle.addEventListener("click", () => {
+  navLink.classList.toggle("hidden");
 });
 
 // Add new user
