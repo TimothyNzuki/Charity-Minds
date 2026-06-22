@@ -52,7 +52,13 @@ JSON.parse(localStorage.getItem("users")) || [
   },
 ];*/
 
+let currentPage = 1;
+const pageSize = 5;
+
+
+
 let users = [];
+
 
 async function loadUsers() {
   try {
@@ -110,7 +116,12 @@ function renderUsers(filterMonth = null, searchQuery = "") {
     );
   }
 
-  filteredUsers.forEach((user) => {
+  const startIndex = (currentPage - 1) * pageSize;
+  const EndIndex = startIndex + pageSize;
+  const paginatedUsers = filteredUsers.slice(startIndex, EndIndex);
+
+
+  paginatedUsers.forEach((user) => {
     const row = document.createElement("tr");
     row.innerHTML = `
             <td class="py-3 px-4">${user.firstName}</td>
@@ -150,7 +161,13 @@ function renderUsers(filterMonth = null, searchQuery = "") {
   }
 
   document.getElementById("newThisMonth").textContent = newThisMonth;
+
+  // Update page info dynamically
+const totalPages = Math.ceil(filteredUsers.length / pageSize);
+document.getElementById("pageInfo").textContent= `Page ${currentPage} of ${totalPages}`;
 }
+
+
 
 // Event listener for month filter
 document.getElementById("monthSelect").addEventListener("change", (event) => {
@@ -178,6 +195,23 @@ const navLink = document.getElementById("navLink");
 
 menuToggle.addEventListener("click", () => {
   navLink.classList.toggle("hidden");
+});
+
+// Event listener for previous page
+document.getElementById("prevPage").addEventListener("click", () => {
+  if (currentPage > 1) {
+    currentPage--;
+    renderUsers();
+  }
+});
+
+// Event listener for next page 
+document.getElementById("nextPage").addEventListener("click", () => {
+  const totalPages = Math.ceil(users.length/ pageSize);
+  if (currentPage < totalPages) {
+    currentPage++;
+    renderUsers();
+  }
 });
 
 // Add new user
